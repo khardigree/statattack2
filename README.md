@@ -1,2 +1,2 @@
-# statattack2
-A sports app for the sports fan
+# statatack
+stat and news tracker for the avid fan

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teams</title>
+</head>
+
+<body>
+    <h1>Football Teams</h1>
+    <ul>
+        {{#each teams}}
+        <li>{{this.name}}</li>
+        {{/each}}
+        <ul>
+            {{#each standings}}
+            <li>{{this.position}}. {{this.team.name}} - {{this.points}} points</li>
+            {{/each}}
+        </ul>
+    </ul>
+    <h1>{{team.name}}</h1>
+    <p>Founded: {{team.founded}}</p>
+    <p>Country: {{team.country}}</p>
+    <p>Venue: {{team.venue_name}}</p>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+{{!-- Defining content for the "body" section of the main layout --}}
+{{#content "body"}}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h2>Login</h2>
+        
+        <!-- Form for user login, posting data to /login -->
+        <form action="/login" method="POST">
+            <div class="mb-3">
+                <!-- Label for the email input field -->
+                <label for="email" class="form-label">Email address</label>
+                
+                <!-- Email input field -->
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <!-- Label for the password input field -->
+                <label for="password" class="form-label">Password</label>
+                
+                <!-- Password input field -->
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            
+            <!-- Submit button for the login form -->
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+</div>
+{{/content}}

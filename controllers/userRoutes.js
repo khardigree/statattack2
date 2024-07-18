@@ -62,6 +62,8 @@ router.post('/login', async (req, res) => {
           .json({ message: 'Incorrect email or password, please try again' });
         return;
       }
+
+      //add route to dashboard once login is complete
   
       req.session.save(() => {
         req.session.user_id = userData.id;

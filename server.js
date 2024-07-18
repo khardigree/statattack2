@@ -8,6 +8,21 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const handlebarsLayouts = require('handlebars-layouts');
 const app = express();
 const PORT = process.env.PORT || 3001;
+const sess = {
+  secret: 'Super secret secret',
+  cookie: {
+    maxAge: 300000,
+    httpOnly: true,
+    secure: false,
+    sameSite: 'strict',
+  },
+  resave: false,
+  saveUninitialized: true,
+  store: new SequelizeStore({
+    db: sequelize
+  })
+};
+
 
 
 handlebarsLayouts.register(hbs.handlebars);
@@ -17,6 +32,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(require('./controllers/'));
 app.use(routes);
+app.use(session(sess));
 
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log('Now listening'));

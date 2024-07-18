@@ -1,11 +1,11 @@
 {{!-- Defining content for the "body" section of the main layout --}}
-{{#content "body"}}
+{{!-- {{#content "body"}} --}}
 <div class="row justify-content-center">
     <div class="col-md-6">
         <h2>Login</h2>
         
         <!-- Form for user login, posting data to /login -->
-        <form action="/login" method="POST">
+        <form action="/api/users/login" method="POST">
             <div class="mb-3">
                 <!-- Label for the email input field -->
                 <label for="email" class="form-label">Email address</label>
@@ -26,4 +26,4 @@
         </form>
     </div>
 </div>
-{{/content}}
+{{!-- {{/content}} --}}

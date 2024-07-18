@@ -1,6 +1,6 @@
 const router = require('express').Router();
 // Import the Project model from the models folder
-const { Team } = require('../models');
+const { Team } = require('../../models');
 const API_KEY = 'JXZu015KR4XrVgHIbdMomfgM7T4Tx1HGZia61gAgpKHqadZzWauspnEOTIAK'; // Replace with your actual API key
 
 // Shows complete list of teams

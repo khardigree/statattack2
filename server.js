@@ -9,6 +9,8 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const handlebarsLayouts = require('handlebars-layouts');
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+// Session setup
 const sess = {
   secret: 'Super secret secret',
   cookie: {
@@ -27,6 +29,7 @@ const sess = {
 handlebarsLayouts.register(hbs.handlebars);
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session(sess));
@@ -34,6 +37,12 @@ app.use(session(sess));
 // Serve static files from the "css" directory
 app.use('/css', express.static(path.join(__dirname, 'css')));
 
+
+
+// Use session middleware before routes
+app.use(session(sess));
+
+// Import and use routes after session middleware
 app.use(routes);
 
 sequelize.sync({ force: false }).then(() => {

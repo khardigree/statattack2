@@ -58,9 +58,29 @@
   </nav>
 </header>
 
-
-
-
+                <!-- Collapsible navbar content -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <!-- Check if the user is authenticated -->
+                        {{#if logged_in}}
+                        <!-- Logout link for authenticated users -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Logout</a>
+                        </li>
+                        {{else}}
+                        <!-- Login and Sign Up links for unauthenticated users -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/signup">Sign Up</a>
+                        </li>
+                        {{/if}}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 
     <!-- Main content area -->
     <main class="container mt-4">

@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const path = require('path');
 const routes = require('./controllers');
 const exphbs = require('express-handlebars');
 const hbs = exphbs.create({});
@@ -25,13 +26,18 @@ const sess = {
   })
 };
 
-// Register handlebars layouts
 handlebarsLayouts.register(hbs.handlebars);
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(session(sess));
+
+// Serve static files from the "css" directory
+app.use('/css', express.static(path.join(__dirname, 'css')));
+
+
 
 // Use session middleware before routes
 app.use(session(sess));

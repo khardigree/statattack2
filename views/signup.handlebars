@@ -1,41 +1,41 @@
-{{!-- Extending the main layout --}}
-{{!-- {{#extend "main"}} --}}
-
-{{!-- Defining content for the "body" section of the main layout --}}
-{{!-- {{#content "body"}} --}}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <h2>Sign Up</h2>
-        
-        <!-- Form for user sign-up, posting data to /signup -->
-        <form action="/api/users/signup" method="POST">
-            <div class="mb-3">
-                <!-- Label for the full name input field -->
-                <label for="username" class="form-label">UserName</label>
-                
-                <!-- Full name input field -->
-                <input type="text" class="form-control" id="username" name="username" required>
-            </div>
-            <div class="mb-3">
-                <!-- Label for the email input field -->
-                <label for="email" class="form-label">Email address</label>
-                
-                <!-- Email input field -->
-                <input type="email" class="form-control" id="email" name="email" required>
-            </div>
-            <div class="mb-3">
-                <!-- Label for the password input field -->
-                <label for="password" class="form-label">Password</label>
-                
-                <!-- Password input field -->
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            
-            <!-- Submit button for the sign-up form -->
-            <button type="submit" class="btn btn-primary">Sign Up</button>
-        </form>
-        
-        {{!-- Placeholder for a connection to a second form that collects team data --}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/output.css">
+  <title>Sign Up</title>
+</head>
+<body class="bg-gray-100">
+  <header class="bg-gray-800 text-white">
+  </header>
+  <main class="flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+      <h1 class="text-2xl font-bold mb-6 text-center text-maroon-700">Sign Up</h1>
+      <form action="/signup" method="POST" class="space-y-4">
+        <div>
+          <label for="firstName" class="block text-sm font-medium text-maroon-700">First Name</label>
+          <input type="text" id="firstName" name="firstName" required class="mt-1 block w-full px-3 py-2 bg-white border border-maroon-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-maroon-500 focus:border-maroon-500 sm:text-sm">
+        </div>
+        <div>
+          <label for="lastName" class="block text-sm font-medium text-maroon-700">Last Name</label>
+          <input type="text" id="lastName" name="lastName" required class="mt-1 block w-full px-3 py-2 bg-white border border-maroon-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-maroon-500 focus:border-maroon-500 sm:text-sm">
+        </div>
+        <div>
+          <label for="username" class="block text-sm font-medium text-maroon-700">Username</label>
+          <input type="text" id="username" name="username" required class="mt-1 block w-full px-3 py-2 bg-white border border-maroon-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-maroon-500 focus:border-maroon-500 sm:text-sm">
+        </div>
+        <div>
+          <label for="email" class="block text-sm font-medium text-maroon-700">Email</label>
+          <input type="email" id="email" name="email" required class="mt-1 block w-full px-3 py-2 bg-white border border-maroon-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-maroon-500 focus:border-maroon-500 sm:text-sm">
+        </div>
+        <div>
+          <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-maroon-600 hover:bg-maroon-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-maroon-500">
+            Sign Up
+          </button>
+        </div>
+      </form>
     </div>
-</div>
-{{!-- {{/content}} --}}
+  </main>
+</body>
+</html>

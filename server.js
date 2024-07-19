@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const path = require('path');
 const routes = require('./controllers');
 const exphbs = require('express-handlebars');
 const hbs = exphbs.create({});
@@ -23,16 +24,17 @@ const sess = {
   })
 };
 
-
-
 handlebarsLayouts.register(hbs.handlebars);
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(require('./controllers/'));
-app.use(routes);
 app.use(session(sess));
+
+// Serve static files from the "css" directory
+app.use('/css', express.static(path.join(__dirname, 'css')));
+
+app.use(routes);
 
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log('Now listening'));

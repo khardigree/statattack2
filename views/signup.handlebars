@@ -1,49 +1,41 @@
-{{!-- Extending the main layout --}}
-{{!-- {{#extend "main"}} --}}
-
-{{!-- Defining content for the "body" section of the main layout --}}
-{{!-- {{#content "body"}} --}}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <h2>Sign Up</h2>
-        
-        <!-- Form for user sign-up, posting data to /signup -->
-        <form action="/api/users/signup" method="POST">
-             <div class="space-y-12">
-    <div class="border-b border-gray-900/10 pb-12">
-      <h2 class="text-base font-semibold leading-7 text-gray-900">Profile</h2>
-      <p class="mt-1 text-sm leading-6 text-gray-600">This information will be displayed publicly so be careful what you share.</p>
-
-      <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-        <div class="sm:col-span-4">
-          <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Username</label>
-          <div class="mt-2">
-            <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-              <span class="flex select-none items-center pl-3 text-gray-500 sm:text-sm"></span>
-              <input type="text" name="username" id="username" autocomplete="username" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="janesmith">
-            </div>
-          </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/output.css">
+  <title>Sign Up</title>
+</head>
+<body class="bg-gray-100">
+  <header class="bg-gray-800 text-white">
+  </header>
+  <main class="flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+      <h1 class="text-2xl font-bold mb-6 text-center text-maroon-700">Sign Up</h1>
+      <form action="/signup" method="POST" class="space-y-4">
+        <div>
+          <label for="firstName" class="block text-sm font-medium text-maroon-700">First Name</label>
+          <input type="text" id="firstName" name="firstName" required class="mt-1 block w-full px-3 py-2 bg-white border border-maroon-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-maroon-500 focus:border-maroon-500 sm:text-sm">
         </div>
-
-    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-        <div class="sm:col-span-4">
-          <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Email</label>
-          <div class="mt-2">
-            <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-              <span class="flex select-none items-center pl-3 text-gray-500 sm:text-sm">yourname@email.com</span>
-              <input type="text" name="username" id="username" autocomplete="username" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="janesmith">
-            </div>
-          </div>
+        <div>
+          <label for="lastName" class="block text-sm font-medium text-maroon-700">Last Name</label>
+          <input type="text" id="lastName" name="lastName" required class="mt-1 block w-full px-3 py-2 bg-white border border-maroon-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-maroon-500 focus:border-maroon-500 sm:text-sm">
         </div>
-    
-
-  <div class="mt-6 flex items-center justify-end gap-x-6">
-    <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
-    <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
-  </div>
-        </form>
-        
-        {{!-- Placeholder for a connection to a second form that collects team data --}}
+        <div>
+          <label for="username" class="block text-sm font-medium text-maroon-700">Username</label>
+          <input type="text" id="username" name="username" required class="mt-1 block w-full px-3 py-2 bg-white border border-maroon-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-maroon-500 focus:border-maroon-500 sm:text-sm">
+        </div>
+        <div>
+          <label for="email" class="block text-sm font-medium text-maroon-700">Email</label>
+          <input type="email" id="email" name="email" required class="mt-1 block w-full px-3 py-2 bg-white border border-maroon-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-maroon-500 focus:border-maroon-500 sm:text-sm">
+        </div>
+        <div>
+          <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-maroon-600 hover:bg-maroon-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-maroon-500">
+            Sign Up
+          </button>
+        </div>
+      </form>
     </div>
-</div>
-{{!-- {{/content}} --}}
+  </main>
+</body>
+</html>

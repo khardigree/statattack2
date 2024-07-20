@@ -1,28 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teams</title>
+    <title>League Selector</title>
+    <style>
+        .leagues-container {
+            display: flex;
+            flex-direction: column;
+            max-width: 300px;
+            margin: auto;
+        }
+        .league {
+            margin: 5px 0;
+        }
+        .standings-container {
+            margin-top: 20px;
+        }
+    </style>
 </head>
-
 <body>
-    <h1>Football Teams</h1>
-    <ul>
-        {{#each teams}}
-        <li>{{this.name}}</li>
-        {{/each}}
-        <ul>
-            {{#each standings}}
-            <li>{{this.position}}. {{this.team.name}} - {{this.points}} points</li>
-            {{/each}}
-        </ul>
-    </ul>
-    <h1>{{team.name}}</h1>
-    <p>Founded: {{team.founded}}</p>
-    <p>Country: {{team.country}}</p>
-    <p>Venue: {{team.venue_name}}</p>
-</body>
+    <h1>Select Leagues</h1>
+    <div class="leagues-container">
+        <label class="league"><input type="checkbox" name="league" value="Superliga" id="636"> Superliga</label>
+        <label class="league"><input type="checkbox" name="league" value="A-League Men" id="1356"> A-League Men</label>
+        <label class="league"><input type="checkbox" name="league" value="Serie A" id="648"> Serie A</label>
+        <label class="league"><input type="checkbox" name="league" value="Super League" id="989"> Super League</label>
+        <label class="league"><input type="checkbox" name="league" value="Liga BetPlay" id="672"> Liga BetPlay</label>
+        <label class="league"><input type="checkbox" name="league" value="Superliga" id="271"> Superliga</label>
+        <label class="league"><input type="checkbox" name="league" value="Premier League" id="8"> Premier League</label>
+        <label class="league"><input type="checkbox" name="league" value="Ligue 1" id="301"> Ligue 1</label>
+        <label class="league"><input type="checkbox" name="league" value="Bundesliga" id="82"> Bundesliga</label>
+        <label class="league"><input type="checkbox" name="league" value="Serie A" id="384"> Serie A</label>
+        <label class="league"><input type="checkbox" name="league" value="Liga MX" id="743"> Liga MX</label>
+        <label class="league"><input type="checkbox" name="league" value="Eredivisie" id="72"> Eredivisie</label>
+        <label class="league"><input type="checkbox" name="league" value="Primera Division" id="764"> Primera Division</label>
+        <label class="league"><input type="checkbox" name="league" value="Liga Portugal" id="462"> Liga Portugal</label>
+        <label class="league"><input type="checkbox" name="league" value="Premiership" id="501"> Premiership</label>
+        <label class="league"><input type="checkbox" name="league" value="La Liga" id="564"> La Liga</label>
+        <label class="league"><input type="checkbox" name="league" value="Super Lig" id="600"> Super Lig</label>
+        <label class="league"><input type="checkbox" name="league" value="Major League Soccer" id="779"> Major League Soccer</label>
+    </div>
+    <button onclick="showSelectedLeagues()">Show Selected Leagues</button>
+    <div id="standings-container" class="standings-container"></div>
 
+    <script>
+        function showSelectedLeagues() {
+            const selectedLeagues = [];
+            const checkboxes = document.querySelectorAll('input[name="league"]:checked');
+            checkboxes.forEach((checkbox) => {
+                selectedLeagues.push({ name: checkbox.value, id: checkbox.id });
+            });
+
+            const standingsContainer = document.getElementById('standings-container');
+            standingsContainer.innerHTML = ''; // Clear previous results
+
+            selectedLeagues.forEach((league) => {
+                fetchStandings(league);
+            });
+        }
+
+        function fetchStandings(league) {
+            const apiUrl = `api/teams/standings/live/leagues/${league.id}`;
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data); // Log the response data to inspect its structure
+                    displayStandings(league.name, data);
+                })
+                .catch(error => {
+                    console.error('Error fetching standings:', error);
+                });
+        }
+
+        function displayStandings(leagueName, data) {
+            const standingsContainer = document.getElementById('standings-container');
+
+            const leagueTitle = document.createElement('h2');
+            leagueTitle.textContent = leagueName;
+            standingsContainer.appendChild(leagueTitle);
+
+            const standingsList = document.createElement('ul');
+
+            // Check if data.data exists and is an array
+            if (data.data && Array.isArray(data.data)) {
+                data.data.forEach(team => {
+                    const listItem = document.createElement('li');
+                    //add to show team name as well
+                    listItem.textContent = `${team.position}. - ${team.points} points`;
+                    standingsList.appendChild(listItem);
+                });
+            } else {
+                const listItem = document.createElement('li');
+                listItem.textContent = 'No standings data available.';
+                standingsList.appendChild(listItem);
+            }
+
+            standingsContainer.appendChild(standingsList);
+        }
+    </script>
+</body>
 </html>

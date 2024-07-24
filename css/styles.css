@@ -33,3 +33,27 @@
     font-family: 'Alfa Slab One', cursive;
     font-size: 35px;
 }
+
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+main {
+    flex: 1;
+}
+.ft-custom {
+    background: linear-gradient(to right, #980000, #3D85C6); 
+    color: white;
+    padding: 1.5rem 0;
+}
+.ft-custom a {
+    color: white;
+    text-decoration: none;
+}
+.ft-custom a:hover {
+    color: #3D85C6; 
+}
+.content-container {
+    margin-bottom: 2rem; 
+}

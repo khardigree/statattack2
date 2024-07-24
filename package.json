@@ -7,8 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "seed": "node seeds/seed.js",
-    "build:css": "postcss css/styles.css -o css/output.css",
-    "watch:css": "postcss css/styles.css -o css/output.css --watch"
   },
   "keywords": [],
   "author": "",

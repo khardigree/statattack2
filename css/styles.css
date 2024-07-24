@@ -1,4 +1,35 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-  
+.navbar-brand {
+    font-family: 'Alfa Slab One', cursive;
+    font-size: 35px;
+}
+.navbar-custom {
+    background: linear-gradient(to right, #980000, #3D85C6);
+}
+
+.login{
+    color: #980000;
+}
+
+.login-btn {
+    background-color: #980000;
+    border-color: #980000;
+  }
+  .login-btn:hover {
+    background-color: #3D85C6;
+    border-color: #3D85C6;
+  }
+
+
+.signup-btn {
+    background-color: #980000;
+    border-color: #980000;
+}
+.signup-btn:hover {
+    background-color: #3D85C6;
+    border-color: #3D85C6;
+}
+
+.statattack-font {
+    font-family: 'Alfa Slab One', cursive;
+    font-size: 35px;
+}

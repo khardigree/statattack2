@@ -9,7 +9,6 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const handlebarsLayouts = require('handlebars-layouts');
 const fetch = require('node-fetch');
 const app = express();
- const API_KEY = 'ZfwB4vlWprPRFhYZZn2wc8rkBlbj2lPuBiBFHGMXZik0VCqb5MA0KJs4DDXd'
 const PORT = process.env.PORT || 3001;
 
 app.use(express.static('public'))

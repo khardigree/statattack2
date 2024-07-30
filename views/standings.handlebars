@@ -1,0 +1,40 @@
+<!-- views/standings.handlebars -->
+
+
+<head>
+    <title>Standings</title>
+</head>
+
+<body>
+   <!-- Handlebars template -->
+    <script id="standings-template" type="text/x-handlebars-template">
+        <h1>League Standings</h1>
+        <div id="standings-container">
+            {{#each standings}}
+                <h2>{{league_name}}</h2>
+                <p>League Data Exists</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Position</th>
+                            <th>Team ID</th>
+                            <th>Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each teams}}
+                            <tr>
+                                <td>{{position}}</td>
+                                <td>{{participant_id}}</td>
+                                <td>{{points}}</td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            {{else}}
+                <p>No standings available</p>
+            {{/each}}
+        </div>
+        <button onclick="window.history.back()">Go Back</button>
+    </script>
+</body>

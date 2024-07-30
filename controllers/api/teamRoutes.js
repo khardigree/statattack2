@@ -1,9 +1,11 @@
-const router = require('express').Router();
 // Import the Project model from the models folder
 const { Team } = require('../../models');
 const API_KEY = 'ZfwB4vlWprPRFhYZZn2wc8rkBlbj2lPuBiBFHGMXZik0VCqb5MA0KJs4DDXd'; // Replace with your actual API key
+const express = require('express');
+// const fetch = require('node-fetch');
+const router = express();
 
-// router.use(express.static('public'));
+router.use(express.static('public'));
 
 // Shows complete list of teams
 router.get('/all', async (req, res) => {
@@ -73,6 +75,29 @@ router.post('/myteams', async (req, res) => {
   } catch (error) {
     res.status(500).send('Error fetching team information');
   }
+});
+
+router.get('/api/standings/:leagueId', async (req, res) => {
+  const leagueId = req.params.leagueId;
+  const apiUrl = `https://api.sportmonks.com/v3/football/standings/live/leagues/${leagueId}?api_token=${API_KEY}`;
+
+  try {
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+      res.json(data);
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+});
+
+router.get('/standings', async (req, res) => {
+    try {
+        const standings = await getStandings();
+        res.render('standings', { standings });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 module.exports = router;

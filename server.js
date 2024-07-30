@@ -10,6 +10,9 @@ const handlebarsLayouts = require('handlebars-layouts');
 const fetch = require('node-fetch');
 const app = express();
 const PORT = process.env.PORT || 3001;
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 app.use(express.static('public'))
 

@@ -7,8 +7,12 @@ const hbs = exphbs.create({});
 const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const handlebarsLayouts = require('handlebars-layouts');
+const fetch = require('node-fetch');
 const app = express();
+ const API_KEY = 'ZfwB4vlWprPRFhYZZn2wc8rkBlbj2lPuBiBFHGMXZik0VCqb5MA0KJs4DDXd'
 const PORT = process.env.PORT || 3001;
+
+app.use(express.static('public'))
 
 // Session setup
 const sess = {
@@ -37,7 +41,18 @@ app.use(session(sess));
 // Serve static files from the "css" directory
 app.use('/css', express.static(path.join(__dirname, 'css')));
 
+// app.get('/api/standings/:leagueId', async (req, res) => {
+//   const leagueId = req.params.leagueId;
+//   const apiUrl = `https://api.sportmonks.com/v3/football/standings/live/leagues/${leagueId}?api_token=${API_KEY}`;
 
+//   try {
+//     const response = await fetch.default(apiUrl);
+//     const data = await response.json();
+//       res.json(data);
+//   } catch (error) {
+//       res.status(500).json({ error: error.message });
+//   }
+// });
 
 // Use session middleware before routes
 app.use(session(sess));

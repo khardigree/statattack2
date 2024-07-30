@@ -3,21 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>League Selector</title>
-    <style>
-        .leagues-container {
-            display: flex;
-            flex-direction: column;
-            max-width: 300px;
-            margin: auto;
-        }
-        .league {
-            margin: 5px 0;
-        }
-        .standings-container {
-            margin-top: 20px;
-        }
-    </style>
+    <title>Select Leagues</title>
+    <!-- Include Handlebars from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script>
 </head>
 <body>
     <h1>Select Leagues</h1>
@@ -41,69 +29,94 @@
         <label class="league"><input type="checkbox" name="league" value="Super Lig" id="600"> Super Lig</label>
         <label class="league"><input type="checkbox" name="league" value="Major League Soccer" id="779"> Major League Soccer</label>
     </div>
-    <button onclick="showSelectedLeagues()">Show Selected Leagues</button>
-    <div id="standings-container" class="standings-container"></div>
+    <button id="showSelectedLeagues">Show Selected Leagues</button>
+
+    <!-- Handlebars template -->
+    <script id="standings-template" type="text/x-handlebars-template">
+        <h1>League Standings</h1>
+        <div id="standings-container">
+            {{#if standings.length}}
+                {{#each standings}}
+                    <h2>{{league_name}}</h2>
+                    <p>League Data Exists</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Position</th>
+                                <th>Team ID</th>
+                                <th>Points</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each teams}}
+                                <tr>
+                                    <td>{{position}}</td>
+                                    <td>{{participant_id}}</td>
+                                    <td>{{points}}</td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                {{/each}}
+            {{else}}
+                <p>No standings available</p>
+            {{/if}}
+        </div>
+        <button onclick="window.history.back()">Go Back</button>
+    </script>
 
     <script>
-        function showSelectedLeagues() {
-            const selectedLeagues = [];
-            const checkboxes = document.querySelectorAll('input[name="league"]:checked');
-            checkboxes.forEach((checkbox) => {
-                selectedLeagues.push({ name: checkbox.value, id: checkbox.id });
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('showSelectedLeagues').addEventListener('click', async () => {
+                const selectedLeagues = Array.from(document.querySelectorAll('input[name="league"]:checked'))
+                                             .map(input => input.id);
+
+                try {
+                    const standings = await Promise.all(selectedLeagues.map(async leagueId => {
+                        const apiUrl = `/api/teams/api/standings/${leagueId}`;
+                        const response = await fetch(apiUrl);
+
+                        if (!response.ok) {
+                            throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
+                        }
+
+                        const data = await response.json();
+                        console.log('API Response:', data); // Log the API response to inspect its structure
+
+                        // Verify the structure and handle it accordingly
+                        if (!data.data) {
+                            console.error('Unexpected API response structure:', data);
+                            throw new Error('Unexpected API response structure');
+                        }
+
+                        return {
+                            league_name: `League ID: ${leagueId}`, // Since the response does not include league name, using league ID for now
+                            teams: data.data.map(team => ({
+                                position: team.position,
+                                participant_id: team.participant_id, // Assuming participant_id represents the team ID
+                                points: team.points
+                            }))
+                        };
+                    }));
+
+                    console.log('Standings Data:', JSON.stringify(standings, null, 2)); // Log the data passed to the template
+
+                    // Compile and render the template
+                    const templateScript = document.getElementById('standings-template').innerHTML;
+                    const template = Handlebars.compile(templateScript);
+                    const standingsHtml = template({ standings });
+                    console.log('Rendered HTML:', standingsHtml); // Log the rendered HTML for debugging
+
+                    // Create a new container and append the rendered HTML
+                    const standingsContainer = document.createElement('div');
+                    standingsContainer.innerHTML = standingsHtml;
+                    document.body.appendChild(standingsContainer);
+                } catch (error) {
+                    console.error('Error fetching league standings:', error);
+                    alert(`Failed to fetch league standings. Error: ${error.message}`);
+                }
             });
-
-            const standingsContainer = document.getElementById('standings-container');
-            standingsContainer.innerHTML = ''; // Clear previous results
-
-            selectedLeagues.forEach((league) => {
-                fetchStandings(league);
-            });
-        }
-
-        function fetchStandings(league) {
-            const apiUrl = `api/teams/standings/live/leagues/${league.id}`;
-
-            fetch(apiUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log(data); // Log the response data to inspect its structure
-                    displayStandings(league.name, data);
-                })
-                .catch(error => {
-                    console.error('Error fetching standings:', error);
-                });
-        }
-
-        function displayStandings(leagueName, data) {
-            const standingsContainer = document.getElementById('standings-container');
-
-            const leagueTitle = document.createElement('h2');
-            leagueTitle.textContent = leagueName;
-            standingsContainer.appendChild(leagueTitle);
-
-            const standingsList = document.createElement('ul');
-
-            // Check if data.data exists and is an array
-            if (data.data && Array.isArray(data.data)) {
-                data.data.forEach(team => {
-                    const listItem = document.createElement('li');
-                    //add to show team name as well
-                    listItem.textContent = `${team.position}. - ${team.points} points`;
-                    standingsList.appendChild(listItem);
-                });
-            } else {
-                const listItem = document.createElement('li');
-                listItem.textContent = 'No standings data available.';
-                standingsList.appendChild(listItem);
-            }
-
-            standingsContainer.appendChild(standingsList);
-        }
+        });
     </script>
 </body>
 </html>
